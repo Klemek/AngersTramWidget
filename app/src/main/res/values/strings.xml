@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Angers Tram Widget</string>
+    <string name="next">Prochains passages</string>
+    <string name="configure">Configuration</string>
+    <string name="configure_stop">Arrêt</string>
+    <string name="configure_dest">Sens / Destination</string>
+    <string name="add_widget">Valider</string>
+    <string name="reload_button">Recharger</string>
+    <string name="text_loading_2">…</string>
+    <string name="text_loading">Chargement…</string>
+
+    <string name="time_text_error">Indisponible</string>
+
+    <string name="info_text_network_error">Erreur réseau</string>
+
+    <string name="info_text_no_data">Aucun horaire trouvé</string>
+    <string name="info_text_no_data_2">Aucun horaire</string>
+
+    <string name="info_text_end_data">Puis aucun horaire</string>
+    <string name="info_text_end_data_2">Aucun horaire</string>
+
+    <string name="stop_text_template">Arrêt %s</string>
+    <string name="stop_text_template_2">%s</string>
+
+    <string name="dest_text_template">Vers %s</string>
+    <string name="dest_text_template_2">> %s</string>
+</resources>

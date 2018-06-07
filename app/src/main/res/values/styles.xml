@@ -1,0 +1,34 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <!--<item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>-->
+    </style>
+
+    <style name="BaseWidgetText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:shadowDx">1.5</item>
+        <item name="android:shadowDy">1.5</item>
+        <item name="android:shadowRadius">2.5</item>
+        <item name="android:shadowColor">#222222</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="PrimaryWidgetText" parent="BaseWidgetText">
+        <item name="android:textSize">@dimen/primary_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="SecondaryWidgetText" parent="BaseWidgetText">
+        <item name="android:textSize">@dimen/secondary_text_size</item>
+    </style>
+    <style name="TertiaryWidgetText" parent="BaseWidgetText">
+        <item name="android:textSize">@dimen/tertiary_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>
