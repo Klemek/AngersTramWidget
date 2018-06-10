@@ -139,7 +139,8 @@ public abstract class TramWidgetConfigureActivity extends Activity {
             setResult(RESULT_OK);
 
             TimeList tl = Data.getSavedDataPref(this, mAppWidgetId);
-            assert tl != null;
+            if(tl == null)
+                tl = new TimeList();
             tl.sort();
             adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, tl.toStringList());
             mListView.setAdapter(adapter);

@@ -6,8 +6,8 @@ android {
         applicationId "fr.klemek.angerstramwidget"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 20
-        versionName "1.0.18"
+        versionCode 21
+        versionName "1.0.19"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
