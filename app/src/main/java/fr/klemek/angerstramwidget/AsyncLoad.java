@@ -2,7 +2,9 @@ package fr.klemek.angerstramwidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
 import android.widget.RemoteViews;
 
 import fr.klemek.angerstramwidget.utils.APIManager;
@@ -39,14 +41,16 @@ class AsyncLoad extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        if (appWidgetManager != null){
+        if (appWidgetManager != null) {
             TimeList tl = Data.getSavedDataPref(ctx, appWidgetId);
-            if(tl == null || tl.size() == 0){
-                RemoteViews views = new RemoteViews(ctx.getPackageName(), R.layout.tram_widget);
+            RemoteViews views = new RemoteViews(ctx.getPackageName(), R.layout.tram_widget);
+            if (tl == null || tl.size() == 0) {
                 views.setTextViewText(R.id.time_text, ctx.getString(R.string.text_loading));
                 views.setTextViewText(R.id.info_text, ctx.getString(R.string.text_loading_2));
-                appWidgetManager.updateAppWidget(appWidgetId, views);
             }
+            views.setTextColor(R.id.time_text, ContextCompat.getColor(ctx, R.color.colorTextLoading));
+            views.setTextColor(R.id.info_text, ContextCompat.getColor(ctx, R.color.colorTextLoading));
+            appWidgetManager.updateAppWidget(appWidgetId, views);
         }
     }
 
@@ -69,7 +73,8 @@ class AsyncLoad extends AsyncTask<Void, Void, Void> {
                 TramWidget.updateTimers(ctx, views, tl, small);
             }
         }
-        if (appWidgetManager != null){
+
+        if (appWidgetManager != null) {
             TramWidget.updateWidgetLook(ctx, views, appWidgetId, small,
                     appWidgetManager.getAppWidgetInfo(appWidgetId).minHeight);
             appWidgetManager.updateAppWidget(appWidgetId, views);

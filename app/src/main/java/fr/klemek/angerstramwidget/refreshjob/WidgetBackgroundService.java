@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 
 import fr.klemek.angerstramwidget.utils.Constants;
 
@@ -50,13 +51,15 @@ public class WidgetBackgroundService extends Service {
     public void onCreate() {
         super.onCreate();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            final String CHANNEL_ID = "fr.klemek.angerstramwidget";
             NotificationChannel notificationChannel = new NotificationChannel("fr.klemek.angerstramwidget",
-                    "Useless channel", NotificationManager.IMPORTANCE_NONE);
+                    CHANNEL_ID, NotificationManager.IMPORTANCE_NONE);
             notificationChannel.enableLights(false);
-            notificationChannel.setShowBadge(false);
+            notificationChannel.enableVibration(false);
+            notificationChannel.setSound(null, null);
             NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             manager.createNotificationChannel(notificationChannel);
-            startForeground(1, new Notification.Builder(getApplicationContext(), "Useless channel")
+            startForeground(1, new Notification.Builder(getApplicationContext(), CHANNEL_ID)
                     .setCategory(Notification.CATEGORY_SERVICE)
                     .build());
         }

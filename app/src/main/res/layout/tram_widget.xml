@@ -38,6 +38,7 @@
             android:maxLines="1"
             android:text="@string/text_loading"
             android:textAppearance="@style/PrimaryWidgetText"
+            android:textColor="@color/colorTextLoading"
             android:textStyle="bold" />
 
         <TextView
@@ -47,7 +48,8 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/text_loading_2"
-            android:textAppearance="@style/SecondaryWidgetText" />
+            android:textAppearance="@style/SecondaryWidgetText"
+            android:textColor="@color/colorTextLoading" />
 
     </LinearLayout>
 

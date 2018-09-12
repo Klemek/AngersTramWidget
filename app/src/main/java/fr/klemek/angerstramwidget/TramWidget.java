@@ -9,7 +9,9 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
@@ -105,6 +107,9 @@ public abstract class TramWidget extends AppWidgetProvider {
             views.setTextViewTextSize(R.id.stop_text, TypedValue.COMPLEX_UNIT_PX, ctx.getResources().getDimension(R.dimen.tertiary_text_size) * factor);
             views.setTextViewTextSize(R.id.dest_text, TypedValue.COMPLEX_UNIT_PX, ctx.getResources().getDimension(R.dimen.tertiary_text_size) * factor);
         }
+
+        views.setTextColor(R.id.time_text, ContextCompat.getColor(ctx, R.color.colorTextDefault));
+        views.setTextColor(R.id.info_text, ContextCompat.getColor(ctx, R.color.colorTextDefault));
 
         Intent configIntent = new Intent(ctx, small ? TramWidgetConfigureActivitySmall.class : TramWidgetConfigureActivityMedium.class);
         configIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
