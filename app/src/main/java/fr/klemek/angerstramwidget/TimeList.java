@@ -36,7 +36,7 @@ public class TimeList {
     }
 
     public void addOffsetDateTime(String strTime) {
-        list.add(OffsetDateTime.parse(strTime).plusMinutes(1).atZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime());
+        list.add(OffsetDateTime.parse(strTime).plusMinutes(1).toLocalDateTime());
     }
 
     public void sort() {
