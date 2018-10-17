@@ -1,5 +1,7 @@
 package fr.klemek.angerstramwidget;
 
+import android.util.Log;
+
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.OffsetDateTime;
@@ -12,16 +14,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import fr.klemek.angerstramwidget.utils.Constants;
 import fr.klemek.angerstramwidget.utils.Utils;
 
 public class TimeList {
 
     private List<LocalDateTime> list;
     private LocalDateTime creationTime;
+    private static ZoneId zoneId = ZoneId.of("Europe/Paris");
 
     public TimeList() {
         list = new ArrayList<>();
-        creationTime = LocalDateTime.now();
+        creationTime = LocalDateTime.now(zoneId);
     }
 
     public TimeList(String toString) {
@@ -36,7 +40,9 @@ public class TimeList {
     }
 
     public void addOffsetDateTime(String strTime) {
-        list.add(OffsetDateTime.parse(strTime).plusMinutes(1).toLocalDateTime());
+        //Log.d(Constants.LOGGER_TAG, ""+strTime);
+        list.add(OffsetDateTime.parse(strTime).atZoneSameInstant(zoneId).plusMinutes(1).toLocalDateTime());
+        //Log.d(Constants.LOGGER_TAG, ">"+list.get(list.size()-1));
     }
 
     public void sort() {
@@ -49,7 +55,7 @@ public class TimeList {
         List<LocalDateTime> tmp = new ArrayList<>();
         for (LocalDateTime ldt : list) {
             try {
-                if (ldt.isAfter(LocalDateTime.now()))
+                if (ldt.isAfter(LocalDateTime.now(zoneId)))
                     tmp.add(ldt);
             } catch (Exception e) {
                 tmp.add(ldt);
@@ -67,7 +73,7 @@ public class TimeList {
     }
 
     public long getAge() {
-        return ChronoUnit.MINUTES.between(creationTime, LocalDateTime.now());
+        return ChronoUnit.MINUTES.between(creationTime, LocalDateTime.now(zoneId));
     }
 
     public ArrayList<String> toStringList() {

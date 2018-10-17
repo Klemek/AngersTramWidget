@@ -10,6 +10,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.ZoneId;
 
+import java.util.List;
+
 import fr.klemek.angerstramwidget.utils.APIManager;
 import fr.klemek.angerstramwidget.utils.Constants;
 
@@ -35,6 +37,11 @@ public class APIManagerTest {
         TimeList tl2 = new TimeList(tl.toString());
         assertNotEquals(0, tl2.getList().size());
 
+        List<String> output = tl.toStringList();
+
+        Log.d(Constants.LOGGER_TAG, tl.getList().get(0).toString() + " " + output.get(0));
+        Log.d(Constants.LOGGER_TAG, tl.getList().get(1).toString() + " " + output.get(1));
+        Log.d(Constants.LOGGER_TAG, tl.getList().get(2).toString() + " " + output.get(2));
     }
 
 }
