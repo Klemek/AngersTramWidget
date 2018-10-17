@@ -24,4 +24,5 @@
 
     <string name="dest_text_template">Vers %s</string>
     <string name="dest_text_template_2">> %s</string>
+    <string name="warn_user">Les passages du tramway dans moins d\'une heure peuvent ne pas apparaître tout de suite.</string>
 </resources>
