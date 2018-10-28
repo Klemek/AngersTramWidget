@@ -51,12 +51,13 @@ public class TimeList {
     }
 
     public void refresh() {
-
         List<LocalDateTime> tmp = new ArrayList<>();
         for (LocalDateTime ldt : list) {
             try {
                 if (ldt.isAfter(LocalDateTime.now(zoneId)))
                     tmp.add(ldt);
+                else
+                    Log.d(Constants.LOGGER_TAG, "Removed old time : " + ldt);
             } catch (Exception e) {
                 tmp.add(ldt);
             }

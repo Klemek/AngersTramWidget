@@ -21,7 +21,7 @@ public final class APIManager {
         params.put("dataset", new String[]{"bus-tram-circulation-passages"});
         params.put("refine.mnemoligne", new String[]{"A"});
         params.put("rows", new String[]{"100"});
-        params.put("sort", new String[]{"-departtheorique"});
+        params.put("sort", new String[]{"departtheorique"});
         if (forward) {
             params.put("refine.mnemoarret", new String[]{"1" + stop});
             //params.put("refine.dest", new String[]{"ANGERS ROSERAIE"});

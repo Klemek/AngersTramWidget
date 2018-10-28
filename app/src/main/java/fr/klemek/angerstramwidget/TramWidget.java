@@ -68,7 +68,7 @@ public abstract class TramWidget extends AppWidgetProvider {
             Log.d(Constants.LOGGER_TAG,appWidgetId+" TimeList null");
         }
 
-        if (tl == null || tl.getAge() < 0 || tl.getAge() >= Constants.MAX_TIMELIST_AGE)
+        if (tl == null || tl.getAge() < 0 || tl.size() == 0)
             new AsyncLoad(ctx, appWidgetManager, appWidgetId, tl == null || tl.size() < 2, small).execute();
 
         // Instruct the widget manager to update the widget

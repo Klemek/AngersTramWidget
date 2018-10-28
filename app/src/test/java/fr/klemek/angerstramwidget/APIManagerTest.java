@@ -29,7 +29,7 @@ public class APIManagerTest {
 
     @Test
     public void testLoadList() {
-        TimeList tl = APIManager.loadList("BAMA", false);
+        TimeList tl = APIManager.loadList("BAMA", true);
         assertNotEquals(0, tl.getList().size());
         Log.d(Constants.LOGGER_TAG, tl.getList().size()+" records");
         Log.d(Constants.LOGGER_TAG, tl.toString());
