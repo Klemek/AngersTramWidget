@@ -9,7 +9,6 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -68,7 +67,7 @@ public abstract class TramWidget extends AppWidgetProvider {
             Log.d(Constants.LOGGER_TAG,appWidgetId+" TimeList null");
         }
 
-        if (tl == null || tl.getAge() < 0 || tl.size() == 0)
+        if (tl == null || tl.shouldReload())
             new AsyncLoad(ctx, appWidgetManager, appWidgetId, tl == null || tl.size() < 2, small).execute();
 
         // Instruct the widget manager to update the widget

@@ -39,6 +39,11 @@ public class TimeList {
         list = list.subList(0, list.size() - 1);
     }
 
+    public boolean shouldReload() {
+        return getAge() < 0 || list.size() == 0 ||
+                ChronoUnit.MINUTES.between(list.get(0), LocalDateTime.now(zoneId)) > Constants.MIN_TIMELIST_DIFF;
+    }
+
     public void addOffsetDateTime(String strTime) {
         //Log.d(Constants.LOGGER_TAG, ""+strTime);
         list.add(OffsetDateTime.parse(strTime).atZoneSameInstant(zoneId).plusMinutes(1).toLocalDateTime());
