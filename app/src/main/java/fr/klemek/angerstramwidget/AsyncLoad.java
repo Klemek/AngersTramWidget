@@ -20,8 +20,9 @@ class AsyncLoad extends AsyncTask<Void, Void, Void> {
     private final boolean small;
     private final AsyncLoadListener listener;
 
-    AsyncLoad(Context ctx, AppWidgetManager appWidgetManager, int appWidgetId, boolean showError, boolean small) {
+    AsyncLoad(Context ctx, TimeList tl, AppWidgetManager appWidgetManager, int appWidgetId, boolean showError, boolean small) {
         this.ctx = ctx;
+        this.tl = tl;
         this.appWidgetManager = appWidgetManager;
         this.appWidgetId = appWidgetId;
         this.showError = showError;
@@ -31,6 +32,7 @@ class AsyncLoad extends AsyncTask<Void, Void, Void> {
 
     AsyncLoad(Context ctx, int appWidgetId, boolean small, AsyncLoadListener listener) {
         this.ctx = ctx;
+        this.tl = null;
         this.appWidgetManager = null;
         this.appWidgetId = appWidgetId;
         this.showError = false;
@@ -42,7 +44,6 @@ class AsyncLoad extends AsyncTask<Void, Void, Void> {
     protected void onPreExecute() {
         super.onPreExecute();
         if (appWidgetManager != null) {
-            TimeList tl = Data.getSavedDataPref(ctx, appWidgetId);
             RemoteViews views = new RemoteViews(ctx.getPackageName(), R.layout.tram_widget);
             if (tl == null || tl.size() == 0) {
                 views.setTextViewText(R.id.time_text, ctx.getString(R.string.text_loading));
@@ -85,7 +86,7 @@ class AsyncLoad extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... voids) {
         String stopCode = Data.loadStopPref(ctx, appWidgetId);
         boolean dest = Data.loadDestPref(ctx, appWidgetId);
-        tl = APIManager.loadList(stopCode, dest);
+        tl = APIManager.loadList(tl, stopCode, dest);
         return null;
     }
 

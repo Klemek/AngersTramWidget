@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
 
 import fr.klemek.angerstramwidget.utils.Constants;
 
@@ -19,17 +18,17 @@ public class WidgetBackgroundService extends Service {
     private static BroadcastReceiver mMinuteTickReceiver;
 
     @Override
-    public IBinder onBind(Intent arg0){
+    public IBinder onBind(Intent arg0) {
         return null;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if(intent != null) {
+        if (intent != null) {
             if (intent.hasExtra("SHUTDOWN")) {
                 if (intent.getBooleanExtra("SHUTDOWN", false)) {
 
-                    if(mMinuteTickReceiver!=null) {
+                    if (mMinuteTickReceiver != null) {
                         unregisterReceiver(mMinuteTickReceiver);
                         mMinuteTickReceiver = null;
                     }
@@ -39,7 +38,7 @@ public class WidgetBackgroundService extends Service {
             }
         }
 
-        if(mMinuteTickReceiver==null) {
+        if (mMinuteTickReceiver == null) {
             registerOnTickReceiver();
         }
         // We want this service to continue running until it is explicitly
@@ -58,16 +57,18 @@ public class WidgetBackgroundService extends Service {
             notificationChannel.enableVibration(false);
             notificationChannel.setSound(null, null);
             NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            manager.createNotificationChannel(notificationChannel);
-            startForeground(1, new Notification.Builder(getApplicationContext(), CHANNEL_ID)
-                    .setCategory(Notification.CATEGORY_SERVICE)
-                    .build());
+            if (manager != null) {
+                manager.createNotificationChannel(notificationChannel);
+                startForeground(1, new Notification.Builder(getApplicationContext(), CHANNEL_ID)
+                        .setCategory(Notification.CATEGORY_SERVICE)
+                        .build());
+            }
         }
     }
 
     @Override
-    public void onDestroy(){
-        if(mMinuteTickReceiver!=null) {
+    public void onDestroy() {
+        if (mMinuteTickReceiver != null) {
             unregisterReceiver(mMinuteTickReceiver);
             mMinuteTickReceiver = null;
         }
@@ -76,10 +77,10 @@ public class WidgetBackgroundService extends Service {
     }
 
     private void registerOnTickReceiver() {
-        mMinuteTickReceiver = new BroadcastReceiver(){
+        mMinuteTickReceiver = new BroadcastReceiver() {
             @Override
-            public void onReceive(Context context, Intent intent){
-                Intent timeTick=new Intent(Constants.ACTION_TICK);
+            public void onReceive(Context context, Intent intent) {
+                Intent timeTick = new Intent(Constants.ACTION_TICK);
                 sendBroadcast(timeTick);
             }
         };

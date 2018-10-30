@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import org.threeten.bp.LocalDateTime;
 
+import java.util.Objects;
+
 import fr.klemek.angerstramwidget.refreshjob.AppWidgetAlarm;
 import fr.klemek.angerstramwidget.refreshjob.RepeatingJob;
 import fr.klemek.angerstramwidget.refreshjob.WidgetBackgroundService;
@@ -68,7 +70,7 @@ public abstract class TramWidget extends AppWidgetProvider {
         }
 
         if (tl == null || tl.shouldReload())
-            new AsyncLoad(ctx, appWidgetManager, appWidgetId, tl == null || tl.size() < 2, small).execute();
+            new AsyncLoad(ctx, tl, appWidgetManager, appWidgetId, tl == null || tl.size() < 2, small).execute();
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -147,7 +149,9 @@ public abstract class TramWidget extends AppWidgetProvider {
         // Enter relevant functionality for when the last widget is disabled
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-            jobScheduler.cancelAll();
+            if (jobScheduler != null) {
+                jobScheduler.cancelAll();
+            }
         } else {
             // stop alarm
             AppWidgetAlarm appWidgetAlarm = new AppWidgetAlarm(context.getApplicationContext());
@@ -168,18 +172,18 @@ public abstract class TramWidget extends AppWidgetProvider {
         ComponentName thisAppWidget = new ComponentName(context.getPackageName(), this.getClass().getName());
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget);
 
-        if (intent.getAction().equals(Constants.SETTINGS_CHANGED)) {
+        if (Objects.equals(intent.getAction(), Constants.SETTINGS_CHANGED)) {
             onUpdate(context, appWidgetManager, appWidgetIds);
             if (appWidgetIds.length > 0) {
                 restartAll(context);
             }
         }
 
-        if (intent.getAction().equals(Constants.JOB_TICK) || intent.getAction().equals(Constants.ACTION_TICK) ||
-                intent.getAction().equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
-                || intent.getAction().equals(Intent.ACTION_DATE_CHANGED)
-                || intent.getAction().equals(Intent.ACTION_TIME_CHANGED)
-                || intent.getAction().equals(Intent.ACTION_TIMEZONE_CHANGED)) {
+        if (Objects.equals(intent.getAction(), Constants.JOB_TICK) || Objects.equals(intent.getAction(), Constants.ACTION_TICK) ||
+                Objects.equals(intent.getAction(), AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+                || Objects.equals(intent.getAction(), Intent.ACTION_DATE_CHANGED)
+                || Objects.equals(intent.getAction(), Intent.ACTION_TIME_CHANGED)
+                || Objects.equals(intent.getAction(), Intent.ACTION_TIMEZONE_CHANGED)) {
             restartAll(context);
             onUpdate(context, appWidgetManager, appWidgetIds);
         }
@@ -208,7 +212,9 @@ public abstract class TramWidget extends AppWidgetProvider {
         builder.setPersisted(true);
         builder.setPeriodic(600000);
         JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        int jobResult = jobScheduler.schedule(builder.build());
+        if (jobScheduler != null) {
+            jobScheduler.schedule(builder.build());
+        }
     }
 
 }

@@ -2,11 +2,9 @@ package fr.klemek.angerstramwidget;
 
 import android.util.Log;
 
-import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.ZoneId;
-import org.threeten.bp.ZoneOffset;
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.temporal.ChronoUnit;
 
@@ -20,12 +18,12 @@ import fr.klemek.angerstramwidget.utils.Utils;
 public class TimeList {
 
     private List<LocalDateTime> list;
-    private LocalDateTime creationTime;
+    private LocalDateTime lastUpdateTime;
     private static ZoneId zoneId = ZoneId.of("Europe/Paris");
 
     public TimeList() {
         list = new ArrayList<>();
-        creationTime = LocalDateTime.now(zoneId);
+        lastUpdateTime = LocalDateTime.now(zoneId);
     }
 
     public TimeList(String toString) {
@@ -35,19 +33,23 @@ public class TimeList {
                 list.add(LocalDateTime.parse(localDateTime));
             }
         }
-        creationTime = list.get(list.size() - 1);
+        lastUpdateTime = list.get(list.size() - 1);
         list = list.subList(0, list.size() - 1);
     }
 
     public boolean shouldReload() {
-        return getAge() < 0 || list.size() == 0 ||
-                ChronoUnit.MINUTES.between(list.get(0), LocalDateTime.now(zoneId)) > Constants.MIN_TIMELIST_DIFF;
+        return getAge() < 0 || getAge() > Constants.MAX_TIMELIST_AGE;
     }
 
     public void addOffsetDateTime(String strTime) {
         //Log.d(Constants.LOGGER_TAG, ""+strTime);
-        list.add(OffsetDateTime.parse(strTime).atZoneSameInstant(zoneId).plusMinutes(1).toLocalDateTime());
-        //Log.d(Constants.LOGGER_TAG, ">"+list.get(list.size()-1));
+        LocalDateTime newDate = OffsetDateTime.parse(strTime).atZoneSameInstant(zoneId).plusMinutes(1).toLocalDateTime();
+        for (LocalDateTime ldt : list)
+            if (ChronoUnit.MINUTES.between(ldt, newDate) == 0)
+                return;
+        list.add(newDate);
+        lastUpdateTime = LocalDateTime.now(zoneId);
+        Log.d(Constants.LOGGER_TAG, "Added new time : " + newDate);
     }
 
     public void sort() {
@@ -78,8 +80,12 @@ public class TimeList {
         return list;
     }
 
+    public TimeList clone() {
+        return new TimeList(this.toString());
+    }
+
     public long getAge() {
-        return ChronoUnit.MINUTES.between(creationTime, LocalDateTime.now(zoneId));
+        return ChronoUnit.MINUTES.between(lastUpdateTime, LocalDateTime.now(zoneId));
     }
 
     public ArrayList<String> toStringList() {
@@ -98,7 +104,7 @@ public class TimeList {
             sb.append(ldt);
             sb.append(';');
         }
-        sb.append(creationTime);
+        sb.append(lastUpdateTime);
         return sb.toString();
     }
 }

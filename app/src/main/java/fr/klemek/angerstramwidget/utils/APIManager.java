@@ -33,8 +33,9 @@ public final class APIManager {
         return params;
     }
 
-    public static TimeList loadList(String stop, boolean forward) {
-        TimeList list = new TimeList();
+    public static TimeList loadList(TimeList old, String stop, boolean forward) {
+        TimeList list = old == null ? new TimeList() : old.clone();
+        Log.i(Constants.LOGGER_TAG, list.size() + " records already there");
         HttpUtils.HttpResult res = HttpUtils.executeRequest("GET", Constants.API_URL, getAPIParameters(stop, forward));
         Log.i(Constants.LOGGER_TAG, res.result.length()+" bytes received");
         if (res.code != 200 && res.getJSON().length() == 0)

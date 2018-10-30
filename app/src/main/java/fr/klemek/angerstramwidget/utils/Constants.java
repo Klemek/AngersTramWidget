@@ -16,7 +16,7 @@ public final class Constants {
     public static final String PREF_PREFIX_KEY = "appwidget_";
 
     public static final int INTERVAL_MILLIS = 60000; //1 minute
-    public static final int MIN_TIMELIST_DIFF = 65; //1 hour and 5 min
+    public static final int MAX_TIMELIST_AGE = 60; //1 hour
 
     public static final String WIDGET_CLICK_REQUEST = "widget_click_request";
 

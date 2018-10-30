@@ -30,9 +30,11 @@ public class AppWidgetAlarm {
         Intent alarmIntent = new Intent(Constants.ACTION_TICK);
         PendingIntent removedIntent = PendingIntent.getBroadcast(mContext, ALARM_ID, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, ALARM_ID, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-        alarmManager.cancel(removedIntent);
-        // needs RTC_WAKEUP to wake the device
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), Constants.INTERVAL_MILLIS, pendingIntent);
+        if (alarmManager != null) {
+            alarmManager.cancel(removedIntent);
+            // needs RTC_WAKEUP to wake the device
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), Constants.INTERVAL_MILLIS, pendingIntent);
+        }
     }
 
     public void stopAlarm()
@@ -42,6 +44,8 @@ public class AppWidgetAlarm {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, ALARM_ID, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(pendingIntent);
+        if (alarmManager != null) {
+            alarmManager.cancel(pendingIntent);
+        }
     }
 }

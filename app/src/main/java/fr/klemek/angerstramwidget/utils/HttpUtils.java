@@ -226,7 +226,7 @@ public final class HttpUtils {
 
         public final int code;
         public final String result;
-        public final Map<String, List<String>> headers;
+        final Map<String, List<String>> headers;
         private JSONObject json = null;
 
         HttpResult(int code, String result, Map<String, List<String>> headers) {

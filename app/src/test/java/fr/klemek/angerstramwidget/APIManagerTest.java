@@ -15,6 +15,7 @@ import java.util.List;
 import fr.klemek.angerstramwidget.utils.APIManager;
 import fr.klemek.angerstramwidget.utils.Constants;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 @RunWith(PowerMockRunner.class)
@@ -29,15 +30,22 @@ public class APIManagerTest {
 
     @Test
     public void testLoadList() {
-        TimeList tl = APIManager.loadList("BAMA", true);
-        assertNotEquals(0, tl.getList().size());
+        TimeList tl = APIManager.loadList(null, "BAMA", false);
+        assertNotEquals(0, tl.size());
         Log.d(Constants.LOGGER_TAG, tl.getList().size()+" records");
         Log.d(Constants.LOGGER_TAG, tl.toString());
+
+        int length = tl.getList().size();
 
         TimeList tl2 = new TimeList(tl.toString());
         assertNotEquals(0, tl2.getList().size());
 
         List<String> output = tl.toStringList();
+
+        TimeList tl3 = APIManager.loadList(tl, "BAMA", false);
+
+        assertEquals(length, tl.size());
+        assertEquals(length, tl3.size());
 
         Log.d(Constants.LOGGER_TAG, tl.getList().get(0).toString() + " " + output.get(0));
         Log.d(Constants.LOGGER_TAG, tl.getList().get(1).toString() + " " + output.get(1));
