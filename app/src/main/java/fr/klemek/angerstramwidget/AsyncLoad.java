@@ -86,7 +86,7 @@ class AsyncLoad extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... voids) {
         String stopCode = Data.loadStopPref(ctx, appWidgetId);
         boolean dest = Data.loadDestPref(ctx, appWidgetId);
-        tl = APIManager.loadList(tl, stopCode, dest);
+        tl = APIManager.loadList(null, stopCode, dest);
         return null;
     }
 

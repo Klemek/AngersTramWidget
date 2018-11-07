@@ -20,7 +20,7 @@ public final class APIManager {
         HashMap<String, String[]> params = new HashMap<>();
         params.put("dataset", new String[]{"bus-tram-circulation-passages"});
         params.put("refine.mnemoligne", new String[]{"A"});
-        params.put("rows", new String[]{"100"});
+        params.put("rows", new String[]{"200"});
         params.put("sort", new String[]{"departtheorique"});
         if (forward) {
             params.put("refine.mnemoarret", new String[]{"1" + stop});
