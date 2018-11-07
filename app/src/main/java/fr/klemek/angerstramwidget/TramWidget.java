@@ -141,7 +141,7 @@ public abstract class TramWidget extends AppWidgetProvider {
     public void onEnabled(Context context) {
         // Enter relevant functionality for when the first widget is created
         restartAll(context);
-        Toast.makeText(context, R.string.warn_user, Toast.LENGTH_LONG).show();
+        //Toast.makeText(context, R.string.warn_user, Toast.LENGTH_LONG).show();
     }
 
     @Override
